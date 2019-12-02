@@ -54,7 +54,7 @@ ExpressOAuthServer.prototype.authenticate = function(options) {
         next();
       })
       .catch(function(e) {
-        return handleError.call(this, e, req, res, null, next);
+        return handleError.call(this, e, req, res, response, next);
       });
   };
 };
