@@ -28,6 +28,9 @@ function ExpressOAuthServer(options) {
   this.continueMiddleware = options.continueMiddleware ? true : false;
   delete options.continueMiddleware;
 
+  this.useResponseHandler = options.useResponseHandler;
+  delete options.useResponseHandler;
+
   this.server = new NodeOAuthServer(options);
 }
 
@@ -131,6 +134,10 @@ ExpressOAuthServer.prototype.token = function(options) {
  * Handle response.
  */
 var handleResponse = function(req, res, response) {
+  if (this.useResponseHandler) {
+    this.useResponseHandler(req, res, response);
+    return;
+  }
 
   if (response.status === 302) {
     var location = response.headers.location;
